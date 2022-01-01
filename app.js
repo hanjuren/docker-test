@@ -6,7 +6,7 @@ const { sequelize, User, Post } = require('./models');
 
 const port = 4000;
 
-sequelize.sync() // force: false 실행시마다 테이블을 새로 재생성할건가에 대한 옵션 true or false
+sequelize.sync({ force: false }) // force: false 실행시마다 테이블을 새로 재생성할건가에 대한 옵션 true or false
   .then(() => {
     console.log('데이터베이스 연결 성공!');
   })
