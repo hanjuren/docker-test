@@ -15,3 +15,18 @@ exports.getAllPosts = async (req, res) => {
     console.log(err.message);
   }
 }
+
+exports.createPost = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { title, content } = req.body;
+    const result = await Post.create({
+      title,
+      content,
+    });
+    console.log(result);
+    res.json({ success: true, data: result });
+  } catch (e) {
+    console.log(e.message);
+  }
+}
