@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<div class="create_post_div">
+  <h4 id="post_div_title">게시물 작성하기.</h4>
+  <form id="create_post">
+    <p>title</p>
+    <label>
+      <input type="text" name="title" placeholder="write title"/>
+    </label>
+    <p>content</p>
+    <label>
+      <textarea id="story" name="story" rows="5" cols="40"></textarea>
+    </label>
+    <div>
+      <button type="submit">작성하기</button>
+    </div>
+  </form>
+</div>
+
+<div class="post_list">
+  <p>My Post List</p>
+  <ul>
+    {% for list in posts %}
+      <li>{{list.title}}</li>
+    {% endfor %}
+  </ul>
+</div>
+<script>
+  document.getElementById('create_post').addEventListener('submit', (e) => {
+    e.preventDefault()
+    const title = e.target.title.value;
+    const content = e.target.story.value;
+
+    axios.post('/post', { title, content })
+     .then((res) => {
+       console.log(res.status);
+       console.log(res.data);
+       return window.location = "/";
+     })
+    .catch((err) => {
+      console.log(err.message);
+      return;
+    });
+  })
+</script>
+{% endblock %}

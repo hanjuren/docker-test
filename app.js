@@ -1,11 +1,11 @@
 const express = require('express');
+const nunjucks = require('nunjucks');
 const router = require('./routes');
 const app = express();
 
-const { sequelize, User, Post } = require('./models');
+const { sequelize } = require('./models');
 
 const port = 4000;
-const a = [];
 
 sequelize.sync({ force: false }) // force: false 실행시마다 테이블을 새로 재생성할건가에 대한 옵션 true or false
   .then(() => {
@@ -14,6 +14,14 @@ sequelize.sync({ force: false }) // force: false 실행시마다 테이블을 �
   .catch((err) => {
     console.log(err);
   });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.set('view engine', 'html');
+nunjucks.configure('views', {
+  express: app,
+  watch: true,
+});
 
 app.use('/', router);
 
