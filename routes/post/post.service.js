@@ -1,4 +1,4 @@
-const { User, Post } = require('../../models')
+const { User, Post } = require('../../models/index(backup)')
 
 exports.getAllPosts = async (req, res) => {
   try {
