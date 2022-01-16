@@ -1,13 +1,8 @@
-import express, {Request, Response, Router} from "express";
-import UserRouter from "./userRouter";
+import { Router } from 'express';
 
-const router: Router = express.Router();
+interface Controller {
+  path: string;
+  router: Router;
+}
 
-router.get('/', (req: Request, res: Response) => {
-  res.send('dafdafda');
-});
-
-router.use('/users', UserRouter)
-
-
-export default router;
+export default Controller;

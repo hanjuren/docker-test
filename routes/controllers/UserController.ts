@@ -1,13 +1,25 @@
-import {Request, Response, Router} from 'express';
-import {Userservice} from "../services/Userservice";
+import {NextFunction, Request, Response, Router} from 'express';
+import Controller from "../index";
+import UserService from "../services/Userservice";
 
-class UserController {
-  private userService = new Userservice();
+class UserController implements Controller {
+  public path: string = '/users';
+  public router: Router = Router();
+  private userService: UserService;
 
-  public index = async (req: Request, res: Response) => {
-    const result: string = await this.userService.index();
-    res.send('hello' + result);
+  constructor() {
+    this.initialiseRoutes();
+    this.userService = new UserService();
+  }
+
+  private initialiseRoutes (): void {
+    this.router.get(this.path, this.getUsers);
+  }
+
+  private getUsers = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+    const result = await this.userService.index();
+    res.send(result);
   }
 }
 
-export default new UserController();
+export default UserController;

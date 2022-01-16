@@ -1,7 +1,7 @@
-import {Request, Response} from "express";
-
-export class Userservice {
+class UserServices {
   public index = async (): Promise<string> => {
     return 'hello World';
   }
 }
+
+export default UserServices;
