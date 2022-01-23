@@ -12,6 +12,9 @@ export class Post {
   @Column("text")
   content: string;
 
+  @Column({ type: 'varchar' })
+  post_type: string;
+
   @OneToMany(() => User, user=> user.posts)
   user: User;
 }
