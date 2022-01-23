@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
 import Controller from './routes/index';
 import UserController from "./routes/controllers/UserController";
+import { createConnection, Connection } from "typeorm";
 import 'dotenv/config'
+
 class App {
   public express: express.Application;
   public port: number;
@@ -10,12 +12,21 @@ class App {
     this.express = express();
     this.port = port;
     this.initialiseController(controller);
+    this.initialiseTypeOrm();
   }
 
   private expressSetting (): void {
     this.express.use(express.json());
   }
-  private dataBaseConnect (): void {}
+
+  private initialiseTypeOrm (): void {
+    createConnection().then(async (connection: Connection) => {
+      console.log("Entity connected : " + connection.isConnected);
+    })
+      .catch((err: Error) => {
+        console.log("TypeORM Connection Error : " + err.message);
+      });
+  }
 
   private initialiseController (controller: Controller[]): void {
     controller.forEach((controller: Controller) => {
@@ -25,7 +36,7 @@ class App {
 
   public listen(): void {
     this.express.listen(this.port, () => {
-      console.log('express server starting');
+      console.log('express server starting' + this.port);
     });
   }
 }
