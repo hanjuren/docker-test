@@ -5,15 +5,16 @@ ARG PORT
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-#RUN npm i -g typescript sequelize-cli
-
 # . 은 현재 디렉토리의 모든것을 /usr/src/app으로 복사한다는 의미다.
 COPY . /usr/src/app
 RUN npm install
 
+RUN npm install -g typescript
+RUN npm install -g typeorm
 RUN npm install -g nodemon
+
 # Bundle app source
 
 EXPOSE $PORT
-
+#
 CMD ["npm", "run", "dev"]

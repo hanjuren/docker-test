@@ -5,7 +5,7 @@
    "username": "test",
    "password": "1210ss",
    "database": "test",
-   "synchronize": false,
+   "synchronize": true,
    "logging": false,
    "entities": [
       "./entity/*.ts"

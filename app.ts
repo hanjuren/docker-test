@@ -1,8 +1,10 @@
 import express, { Request, Response } from 'express';
 import Controller from './routes/index';
 import UserController from "./routes/controllers/UserController";
+import AuthController from "./routes/controllers/AuthController";
 import { createConnection, Connection } from "typeorm";
 import 'dotenv/config'
+import cors from 'cors';
 
 class App {
   public express: express.Application;
@@ -17,6 +19,7 @@ class App {
 
   private expressSetting (): void {
     this.express.use(express.json());
+    this.express.use(cors);
   }
 
   private initialiseTypeOrm (): void {
@@ -41,6 +44,10 @@ class App {
   }
 }
 
-const app = new App(Number(process.env.PORT), [new UserController()]);
+const app = new App(Number(process.env.PORT),
+  [
+    new UserController(),
+    new AuthController(),
+  ]);
 
 app.listen();
